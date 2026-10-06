@@ -1,0 +1,247 @@
+/* ==========================================================================
+   Scene two — the creative universe.
+   This is the supplied film played AS the section, not a recreation of it:
+   the cards, the red light-painting, the embers and every corner label are
+   part of the footage. The page's job is to present it cinematically — arrive
+   from black, hold the frame, and breathe over the loop seam — and to stay
+   out of its way.
+   ========================================================================== */
+
+.flow {
+  position: relative;
+  z-index: 2;
+}
+
+/* The hero is position:fixed, so its scroll height has to be reserved here or
+   the universe would start at the top of the document and sit on top of it. */
+.hero-spacer {
+  height: 100svh;
+  pointer-events: none;
+}
+
+.universe {
+  position: relative;
+  height: 100svh;
+  background:
+    radial-gradient(ellipse at 50% 47%, rgba(224, 14, 36, .62), transparent 46%),
+    radial-gradient(ellipse at 18% 70%, rgba(91, 8, 20, .5), transparent 39%),
+    linear-gradient(180deg, #090506 0%, #17070a 48%, #030303 100%);
+  overflow: hidden;
+  /* hard cut from the hero: two scenes, not a gradient between them */
+  box-shadow: 0 -1px 0 0 #000;
+}
+.universe::before,
+.universe::after {
+  content: '';
+  position: absolute;
+  pointer-events: none;
+}
+.universe::before {
+  z-index: 0;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 52% 54%, rgba(242, 24, 42, .32), transparent 43%),
+    linear-gradient(180deg, rgba(0, 0, 0, .16), transparent 38%, rgba(0, 0, 0, .72));
+}
+.universe::after {
+  z-index: 0;
+  inset: auto 0 0;
+  height: 90%;
+  background:
+    linear-gradient(180deg, rgba(160, 6, 29, .66) 0%, rgba(37, 3, 10, .9) 48%, #010101 100%);
+  clip-path: polygon(0 68%, 12% 38%, 24% 58%, 35% 5%, 47% 48%, 59% 16%, 72% 53%, 84% 0, 93% 39%, 100% 26%, 100% 100%, 0 100%);
+  filter: drop-shadow(0 -10px 34px rgba(244, 14, 40, .7));
+}
+
+#uniFilm {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  /* the film is 16:9; any other viewport crops rather than letterboxes,
+     keeping the figure centred and the frame full-bleed */
+  object-fit: cover;
+  object-position: 50% 42%;
+  display: none;
+  opacity: 0;
+  transform: scale(1.045);
+  transition: opacity 1.9s var(--ease-out), transform 3.2s var(--ease-out);
+}
+.universe.is-on #uniFilm {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* --------------------------------------------------------------------------
+   The chapter title, set over the film. Top-centre is the one region the
+   footage keeps dark (the ceiling above the figure), so the text lives there
+   and clears the Ps and Claude cards that hold the upper corners.
+   -------------------------------------------------------------------------- */
+
+.universe__title {
+  position: absolute;
+  top: clamp(26px, 6.5vh, 66px);
+  left: 50%;
+  transform: translate(-50%, 14px);
+  z-index: 2;
+  width: min(94vw, 900px);
+  text-align: center;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 1.3s var(--ease-out) 0.75s,
+              transform 1.6s var(--ease-out) 0.75s;
+}
+.universe.is-on .universe__title { opacity: 1; transform: translate(-50%, 0); }
+
+.universe__portrait {
+  position: absolute;
+  z-index: 3;
+  top: clamp(142px, 19vh, 185px);
+  left: 50%;
+  height: min(61vh, 620px);
+  width: auto;
+  max-width: 70vw;
+  object-fit: contain;
+  object-position: center bottom;
+  transform: translate(-50%, 14px);
+  opacity: 0;
+  filter: drop-shadow(0 18px 34px rgba(0, 0, 0, .68))
+          drop-shadow(0 0 18px rgba(201, 18, 38, .22));
+  transition: opacity 1.2s var(--ease-out) .45s,
+              transform 1.35s var(--ease-out) .45s;
+  pointer-events: none;
+}
+.universe.is-on .universe__portrait {
+  opacity: 1;
+  transform: translate(-50%, 0);
+  animation: universePortraitBreathe 6.4s ease-in-out 1.4s infinite;
+}
+@keyframes universePortraitBreathe {
+  0%, 100% {
+    translate: 0 0;
+    filter: drop-shadow(0 18px 34px rgba(0, 0, 0, .68))
+            drop-shadow(0 0 18px rgba(201, 18, 38, .22));
+  }
+  50% {
+    translate: 0 -8px;
+    filter: drop-shadow(0 22px 38px rgba(0, 0, 0, .72))
+            drop-shadow(0 0 28px rgba(230, 22, 44, .4));
+  }
+}
+
+.universe__profile {
+  position: absolute;
+  z-index: 4;
+  left: 50%;
+  bottom: clamp(24px, 7vh, 76px);
+  width: min(850px, 88vw);
+  transform: translate(-50%, 12px);
+  color: #fff5ec;
+  text-align: center;
+  opacity: 0;
+  padding: 14px 10px 4px;
+  background: linear-gradient(90deg, transparent, rgba(3, 2, 2, .82) 14%, rgba(3, 2, 2, .82) 86%, transparent);
+  transition: opacity 1.2s var(--ease-out) 0.9s,
+              transform 1.4s var(--ease-out) 0.9s;
+}
+.universe.is-on .universe__profile { opacity: 1; transform: translate(-50%, 0); }
+.universe__summary {
+  max-width: 700px;
+  margin: 0 auto 14px;
+  font-family: var(--ui);
+  font-size: clamp(15px, 1.2vw, 18px);
+  line-height: 1.65;
+  color: #fff7ee;
+  text-shadow: 0 2px 14px #000;
+}
+.universe__skills {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.universe__skills li {
+  padding: 8px 11px;
+  border: 1px solid rgba(242, 232, 220, .34);
+  background: rgba(8, 7, 7, .72);
+  font-family: var(--ui);
+  font-size: clamp(11px, .85vw, 13px);
+  letter-spacing: .11em;
+  text-transform: uppercase;
+  text-shadow: 0 1px 8px #000;
+}
+.universe__certs {
+  margin: 17px 0 0;
+  font-family: var(--ui);
+  font-size: clamp(11px, .85vw, 13px);
+  letter-spacing: .12em;
+  line-height: 1.6;
+  text-transform: uppercase;
+  color: #ffd18a;
+  text-shadow: 0 2px 10px #000;
+}
+
+.universe__over {
+  margin: 0 0 0.9em;
+  font-family: var(--ui);
+  font-size: clamp(10px, 0.8vw, 13px);
+  font-weight: 500;
+  letter-spacing: 0.5em;
+  text-indent: 0.5em;        /* recentre what the tracking pushes right */
+  text-transform: uppercase;
+  color: #ffcc9a;
+}
+.universe__name {
+  margin: 0;
+  font-family: 'Bodoni Moda', 'Times New Roman', serif;
+  font-weight: 400;
+  font-size: clamp(27px, 3vw, 46px);
+  line-height: 1.22;
+  letter-spacing: 0.26em;
+  text-indent: 0.26em;
+  text-transform: uppercase;
+  color: #fff5ec;
+  text-shadow: 0 0 0.6em rgba(0, 0, 0, 0.9), 0 0 2em rgba(0, 0, 0, 0.7);
+}
+.universe__sub {
+  margin: 1.1em 0 0;
+  font-family: var(--ui);
+  font-size: clamp(10px, 0.82vw, 13px);
+  font-weight: 400;
+  letter-spacing: 0.42em;
+  text-indent: 0.42em;
+  text-transform: uppercase;
+  color: #f5d9c6;
+}
+
+@media (max-width: 760px) {
+  .universe__name { max-width: 100%; font-size: clamp(24px, 5.4vw, 32px); letter-spacing: 0.1em; text-indent: 0.1em; }
+  .universe__over { font-size: 10px; letter-spacing: .32em; }
+  .universe__sub { font-size: 10px; letter-spacing: .2em; }
+  .universe__portrait { top: 138px; height: min(42vh, 300px); max-width: 86vw; }
+  .universe__profile { bottom: 86px; width: 94vw; padding: 8px; background: rgba(3, 2, 2, .84); }
+  .universe__summary { margin-bottom: 8px; font-size: 12px; line-height: 1.4; }
+  .universe__skills { gap: 4px; }
+  .universe__skills li { padding: 4px 6px; font-size: 10px; letter-spacing: .07em; }
+  .universe__certs { margin-top: 8px; font-size: 10px; line-height: 1.45; letter-spacing: .06em; }
+}
+
+/* breathes to black across the film's loop point so the cut is never seen,
+   and doubles as the entrance veil */
+.universe__veil {
+  position: absolute;
+  inset: 0;
+  background: #000;
+  opacity: 1;
+  pointer-events: none;
+  transition: opacity 0.45s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #uniFilm, .universe__title { transition-duration: 0.01ms; transition-delay: 0s; transform: none; }
+  .universe__portrait { animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
+  .universe.is-on .universe__title { transform: translate(-50%, 0); }
+}

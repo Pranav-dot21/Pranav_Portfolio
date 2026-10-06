@@ -1,0 +1,52 @@
+.depth-layer {
+  translate: var(--depth-x, 0px) var(--depth-y, 0px);
+  rotate: y var(--depth-ry, 0deg);
+  scale: var(--depth-scale, 1);
+  backface-visibility: hidden;
+}
+.stage-wrap, .universe, .chrono__pin, .gallery__pin {
+  perspective: 1400px;
+}
+.universe__profile, .gallery__project-notes article {
+  border: 1px solid rgb(255 255 255 / .12);
+  background: linear-gradient(135deg, rgb(255 255 255 / .07), rgb(12 3 3 / .8));
+  box-shadow: 0 18px 60px rgb(0 0 0 / .3);
+}
+.universe__skills li, .gallery__project-notes article, .yr, .g-card {
+  transition: rotate .25s ease-out, translate .25s ease-out, box-shadow .3s;
+}
+.depth-hover {
+  box-shadow: 0 16px 38px rgb(0 0 0 / .55), 0 0 24px rgb(222 27 28 / .18) !important;
+}
+.depth-light {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 650px;
+  height: 650px;
+  margin: -325px;
+  background: radial-gradient(circle, rgb(255 70 45 / .12), rgb(222 27 28 / .035) 35%, transparent 65%);
+  pointer-events: none;
+  z-index: 25;
+  mix-blend-mode: screen;
+  opacity: 0;
+}
+.depth-progress {
+  position: fixed;
+  inset: 0 0 auto;
+  height: 2px;
+  background: linear-gradient(90deg, #de1b1c, #ffb38d);
+  box-shadow: 0 0 12px #de1b1c;
+  transform-origin: left;
+  scale: 0 1;
+  pointer-events: none;
+  z-index: 70;
+}
+@media (pointer: coarse) {
+  .depth-light { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .depth-layer { translate: none !important; rotate: none !important; scale: none !important; }
+  .depth-light { display: none; }
+  .depth-hover { rotate: none !important; translate: none !important; }
+}

@@ -1,0 +1,11 @@
+.git
+.claude
+assets_src
+tools
+docs
+shots
+*.mp4
+*.mov
+*.jpg
+README.md
+!public/**

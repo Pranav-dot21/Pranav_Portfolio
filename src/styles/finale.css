@@ -1,0 +1,225 @@
+/* ==========================================================================
+   The finale — the closing shot.
+   Deep black + dark red + crimson + cream. The furnace canvas sits behind a
+   giant GIREESH set in real type (Anton, stretched to the reference's
+   ultra-tall poster proportions, wearing the extracted grunge), the man's
+   canvas rides in front of the title, and the editorial captions + the quiet
+   functional row hold the edges.
+   ========================================================================== */
+
+.fin {
+  position: relative;
+  z-index: 2;
+  height: 100svh;
+  background: #000;
+}
+
+.fin__pin {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  overflow: hidden;
+  background: #000;
+}
+
+.fin__stage1 {
+  position: absolute;
+  inset: 0;
+  will-change: transform;
+}
+
+#finBack,
+#finMan {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+#finBack { z-index: 1; }
+#finMan { z-index: 3; pointer-events: none; }
+
+.fin__wordmark {
+  position: absolute;
+  z-index: 2;
+  top: 46%;
+  left: 50%;
+  margin: 0;
+  white-space: nowrap;
+  transform: translate(-50%, -50%);
+  color: rgba(246, 232, 220, .94);
+  font-family: Anton, Impact, sans-serif;
+  font-size: min(52vh, 30vw, 520px);
+  line-height: .82;
+  letter-spacing: -.055em;
+  text-shadow: 0 4px 8px rgba(0, 0, 0, .24),
+               0 0 34px rgba(255, 72, 48, .22);
+  opacity: 0;
+  filter: blur(12px);
+  transition: opacity 1.2s ease .18s, filter 1.4s ease .18s;
+  pointer-events: none;
+}
+.fin.is-caps .fin__wordmark { opacity: .96; filter: none; }
+
+/* Match the reference poster: condensed Anton lettering, a
+   warm ivory-to-rose fill, red haze, and a fine distressed texture. */
+.fin__wordmark {
+  color: transparent;
+  font-family: Anton, Impact, sans-serif;
+  font-size: min(56vh, 70vw, 780px);
+  font-weight: 400;
+  line-height: .82;
+  letter-spacing: -.055em;
+  text-shadow: none;
+  background-color: #f3dfd3;
+  background-image:
+    linear-gradient(180deg, #fff8ef 0%, #eee0d6 40%, #dcbbb3 72%, #b84743 100%),
+    url('../../public/tex/grunge.png');
+  background-size: 100% 100%, 260px;
+  background-repeat: no-repeat, repeat;
+  background-blend-mode: normal, multiply;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 7px 10px rgba(0, 0, 0, .52))
+          drop-shadow(0 0 30px rgba(238, 28, 35, .25));
+}
+.fin__wordmark { transform: translate(-50%, -50%) scaleX(.68); }
+/* --------------------------------------------------------------------------
+   Editorial captions — cream letterspaced, red punctuation.
+   -------------------------------------------------------------------------- */
+
+.f-cap {
+  position: absolute;
+  margin: 0;
+  z-index: 4;
+  font-family: var(--ui);
+  font-size: clamp(8px, 0.72vw, 12px);
+  font-weight: 400;
+  line-height: 2.1;
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  color: rgba(233, 220, 208, 0.72);
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 1s ease calc(var(--li, 0) * 0.15s),
+              transform 1.2s cubic-bezier(0.22, 1, 0.36, 1) calc(var(--li, 0) * 0.15s);
+  pointer-events: none;
+}
+.fin.is-caps .f-cap { opacity: 1; transform: none; }
+
+.f-cap--tl {
+  top: clamp(22px, 6vh, 58px);
+  left: clamp(24px, 3.6vw, 62px);
+  padding-left: 1.2em;
+  border-left: 2px solid #b3271d;
+}
+.f-cap--quote {
+  top: 38%;
+  left: clamp(24px, 3.2vw, 56px);
+  font-size: clamp(10px, 0.92vw, 15px);
+  letter-spacing: 0.34em;
+  color: rgba(240, 230, 220, 0.88);
+}
+.f-cap--quote::after {
+  content: '';
+  display: block;
+  width: 2.1em;
+  height: 2px;
+  margin-top: 1.5em;
+  background: #b3271d;
+}
+.f-cap--blw {
+  bottom: clamp(64px, 11vh, 110px);
+  left: clamp(24px, 3.6vw, 62px);
+  padding-left: 1.2em;
+  border-left: 2px solid #b3271d;
+}
+.f-cap--tr {
+  top: clamp(22px, 6vh, 58px);
+  right: clamp(24px, 3.6vw, 62px);
+}
+.f-cap--tr::after,
+.f-cap--br::after {
+  content: '';
+  display: block;
+  width: 1.8em;
+  height: 2px;
+  margin-top: 1.2em;
+  background: #b3271d;
+}
+.f-cap--br {
+  bottom: clamp(64px, 11vh, 110px);
+  right: clamp(24px, 3.6vw, 62px);
+}
+
+/* --------------------------------------------------------------------------
+   The functional row — a real footer, whispering. Sits on the bottom edge
+   without breaking the frame.
+   -------------------------------------------------------------------------- */
+
+.fin__bar {
+  position: absolute;
+  z-index: 7;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 14px clamp(20px, 3.6vw, 62px) 16px;
+  font-family: var(--ui);
+  font-size: clamp(8px, 0.66vw, 11px);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(216, 186, 174, 0.5);
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 1s ease, transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.fin.is-bar .fin__bar { opacity: 1; transform: none; }
+
+.fin__bar a {
+  color: rgba(233, 220, 208, 0.7);
+  text-decoration: none;
+  transition: color 0.35s ease, text-shadow 0.35s ease;
+}
+.fin__bar a:hover,
+.fin__bar a:focus-visible {
+  color: #f4ecdd;
+  text-shadow: 0 0 14px rgba(220, 60, 40, 0.55);
+  outline: none;
+}
+.fin__soc {
+  display: flex;
+  gap: 2.4em;
+}
+.fin__c { font-size: inherit; letter-spacing: 0.24em; }
+
+/* --------------------------------------------------------------------------
+   Portrait + fallbacks
+   -------------------------------------------------------------------------- */
+
+.fin.is-portrait .f-cap--tr,
+.fin.is-portrait .f-cap--tl,
+.fin.is-portrait .f-cap--blw { display: none; }
+.fin.is-portrait .f-cap--quote { top: auto; bottom: 24vh; }
+.fin.is-portrait .fin__wordmark { font-size: min(56vh, 72vw, 460px); }
+.fin.is-portrait .fin__bar {
+  flex-direction: column;
+  gap: 10px;
+  padding-bottom: 20px;
+}
+
+.fin.is-fallback #finBack,
+.fin.is-fallback #finMan { display: none; }
+.fin.is-fallback {
+  background: #000 url('../../public/fin/plate.jpg') center / cover no-repeat;
+}
+.fin.is-set .f-cap,
+.fin.is-set .fin__bar { opacity: 1; transform: none; filter: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .f-cap, .fin__bar { transition-duration: 0.01ms; transition-delay: 0s; }
+}
